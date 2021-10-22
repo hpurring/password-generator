@@ -97,9 +97,11 @@ var generateBtn = document.querySelector("#generate");
 // Generate password
 function generatePassword() {
   const totalLength = prompt("How many characters would you like to use? (Choose a number between 8 and 128.)");
-  if (totalLength <= 8 || totalLength >= 128) {
-    alert('Your new password will be ${totalLength} characters long.');
-  };
+  if (totalLength >= 8 && totalLength <= 128) {
+    alert(`Your new password will be ${totalLength} characters long.`);
+  } else {
+    alert('Your password must be 8-128 characters!');
+  }
   
   // var options = {
   //   hasNumber: window.confirm('Would you like to include numbers?'),
@@ -120,29 +122,36 @@ function generatePassword() {
   let allChars = "";
   let password = "";
 
+  
   if (upper) {
-    allChars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  } 
+    allChars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
+  }
+
   if (lower) {
     allChars += "abcdefghijklmnopqrstuvwxyz";
   }
+
   if (symbol) {
     allChars += "'!#$%&()*+,-./:;<=>?@^[\\]^_``{|}~'";
-  }
+  };
+  
   if (number) {
     allChars += "0123456789";
-  }
+  };
+
    
   // Generate password that matches the selected criteria
   // create a for loop to iterate over the chosen characters
-  // return the generated password
 
-  else {
-    alert('Your password must be 8-128 characters!')
+ 
+  for (var i = 0, n = totalLength; i < totalLength; i++) {
+    //picks a character within charSet at index of random number
+    password += allChars.charAt(Math.floor(Math.random() * allChars.length));
   }
+  console.log(password);
 
-
-
+  // return the generated password
+  return(password);
 }
 
 // Write password to the #password input
@@ -151,8 +160,9 @@ function writePassword() {
   var passwordText = document.querySelector("#password");
 
   passwordText.value = password;
-
 }
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
+
+writePassword();
